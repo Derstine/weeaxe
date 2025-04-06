@@ -32,7 +32,7 @@ export default function Login() {
 			  localStorage.setItem("remember", "true")
 			}
 
-			window.location.href = "/dashboard"
+            window.location.href = "dashboard"
 		  } else {
 			// error
 			setError(data.message || "Login failed")

@@ -1,43 +1,18 @@
 "use client"
 
-import Image from "next/image";
-import Login from "@/components/login";
-import { useEffect, useState } from "react";
-import { isSessionValid } from "@/functions/authenticationAPI";
-import SkinsPage from "@/components/skins";
+export default function Page() {
 
-export default function Home() {
-	const [validSession, setValidSession] = useState(false);
-
-	useEffect(() => {
-		const checkSession = async () => {
-			const sessionData = localStorage.getItem("session");
-			
-			if(sessionData) { // session found
-				const session = JSON.parse(sessionData);
-				if(session.token) {
-					// make sure session is good
-					const {success, data} = await isSessionValid(session.token);
-
-					if(success) {
-						setValidSession(true)
-					} else {
-						console.log(data)
-					}
-					
-				}
-			}
-		}
-
-		checkSession()
-	}, [])
 
 	return (
 		<>
-			{validSession ?
-				<SkinsPage />
-			:
-				<Login />}
+			<div className="absolute flex justify-center items-center w-screen h-screen bg-gray-900 bg-cover bg-center z-0" style={{ backgroundImage: "url('/weeaxe.png')", filter: 'blur(10px)' }} />
+			<div className="absolute flex justify-center items-center w-screen h-screen">
+				<div className="absolute w-1/4 h-1/2 z-10 bg-white opacity-55 rounded-4xl" />
+			</div>
+			<div className="absolute flex flex-col justify-center items-center w-full h-full z-10 text-gray-950">
+				<a href="/login" className="text-2xl font-bold mb-6 text-center">Login</a>
+				<a href="/dashboard" className="text-2xl font-bold mb-6 text-center">Dashboard</a>
+			</div>
 		</>
 	)
 }
