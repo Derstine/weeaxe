@@ -13,6 +13,18 @@ async function hashCredentials(username: string, password: string) { //chatgpt g
 	return encodedCredentials
 }
 
+export function getSessionToken() {
+	const sessionData = localStorage.getItem("session");
+
+	if(sessionData) { // session found
+		const session = JSON.parse(sessionData);
+		if(session.token) {
+			return session.token;
+		}
+	}
+	return false;
+}
+
 export async function sendSessionLoginRequest(username: string, password: string, remember: boolean) {
     const rememberString = remember ? "true" : "false";
     const credentials = await hashCredentials(username, password);

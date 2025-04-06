@@ -1,5 +1,11 @@
-export default function Dashboard() {
+import { useEffect } from "react"
+import SkinsPage from "./skins"
+
+export default function Dashboard({username} : {username: string}) {
     return (
-        <p>dashboard</p>
+        <div>
+            <p>Welcome {username}!</p>
+            <SkinsPage />
+        </div>
     )
 }

@@ -9,6 +9,8 @@ export default function Page() {
     const [error, setError] = useState("")
     const [validSession, setValidSession] = useState(false);
 
+    const [username, setUsername] = useState("");
+
     useEffect(() => {
         const checkSession = async () => {
             const sessionData = localStorage.getItem("session");
@@ -20,8 +22,9 @@ export default function Page() {
                     const {success, data} = await isSessionValid(session.token);
 
                     if(success) {
-                        setValidSession(true)
-                        setLoading(false)
+                        setValidSession(true);
+                        setUsername(data.owner.name);
+                        setLoading(false);
                     } else {
                         setError("Invalid Session");
                     }
@@ -38,7 +41,7 @@ export default function Page() {
             { loading ? <p>Loading dashboard</p> :
 
                 (error ? <p>error screem</p> :
-                    <Dashboard />
+                    <Dashboard username={username} />
                 )
             }
         </>
