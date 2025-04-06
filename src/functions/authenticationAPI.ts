@@ -18,9 +18,7 @@ export function getSessionToken() {
 
 	if(sessionData) { // session found
 		const session = JSON.parse(sessionData);
-		if(session.token) {
-			return session.token;
-		}
+		return session
 	}
 	return false;
 }

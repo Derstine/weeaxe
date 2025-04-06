@@ -2,7 +2,9 @@
 
 import { createAccessToken, getSessionToken } from "@/functions/authenticationAPI";
 import { uploadSkinRequest } from "@/functions/skinAPI";
+import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
+import { Input } from "./ui/input";
 
 export default function SkinsPage() {
     const [username, setUsername] = useState("");
@@ -10,6 +12,10 @@ export default function SkinsPage() {
     const [skinTexture, setSkinTexture] = useState("");
     const [skinImage, setSkinImage] = useState("");
     const [error, setError] = useState("");
+
+	const [skinID, setSkinID] = useState("");
+	const [captionText, setCaptionText] = useState("");
+	const [captionColor, setCaptionColor] = useState("");
 
     async function searchSkin(username: string) {
         try {
@@ -41,7 +47,9 @@ export default function SkinsPage() {
 
     async function uploadSkin() {
         console.log("Uploading skin...");
-        const sessionToken = await getSessionToken();
+        const session = await getSessionToken();
+		const sessionToken = session.token;
+		const sessionUser = session.owner.name;
 
         const createAccessTokenResponse = await createAccessToken(sessionToken, "skin");
         if (!createAccessTokenResponse.success) {
@@ -55,11 +63,11 @@ export default function SkinsPage() {
         console.log("Signature: " + skinSignature);
 
         const uploadSkinResponse = await uploadSkinRequest(
-            "dog_euthanizer",
-            "technoblade",
+            sessionUser,
+            skinID,
             accessToken,
-            "Technoblade",
-            "blue",
+            captionText,
+            captionColor,
             skinTexture,
             skinSignature
         );
@@ -87,6 +95,12 @@ export default function SkinsPage() {
             {skinImage && (
                 <>
                     <img src={skinImage} alt="Minecraft Skin" />
+					<Label className="text-lg" htmlFor="skinID">Skin ID</Label>
+					<Input className="border-gray-400 mt-1" id="skinID" type="text" value={skinID} onChange={(e) => setSkinID(e.target.value)} placeholder="Skin ID" disabled={!skinImage} required />
+					<Label className="text-lg" htmlFor="captionText">Caption Text</Label>
+					<Input className="border-gray-400 mt-1" id="captionText" type="text" value={captionText} onChange={(e) => setCaptionText(e.target.value)} placeholder="Caption" disabled={!skinImage} required />
+					<Label className="text-lg" htmlFor="captionColor">Caption Color</Label>
+					<Input className="border-gray-400 mt-1" id="captionColor" type="text" value={captionColor} onChange={(e) => setCaptionColor(e.target.value)} placeholder="Color" disabled={!skinImage} required />
                     <button onClick={() => uploadSkin()}>Upload</button>
                 </>
             )}
