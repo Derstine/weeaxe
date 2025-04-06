@@ -34,6 +34,23 @@ export async function sendSessionLoginRequest(username: string, password: string
 
 }
 
+export async function createAccessToken(token: string, scope: string) {
+    const response = await fetch(
+		`https://api.weeaxe.cn:15102/auth/v2/access/session?scope=${scope}`,
+		{
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+		}
+	);
+
+	const data = await response.json();
+    return {success: response.ok, data: data};
+}
+
 export async function isSessionValid(token: string) {
     console.log("token: " + token)
     const response = await fetch("https://api.weeaxe.cn:15102/auth/v2/session", {

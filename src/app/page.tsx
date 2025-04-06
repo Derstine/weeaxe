@@ -1,9 +1,10 @@
 "use client"
 
 import Image from "next/image";
-import Login from "@/components/session";
+import Login from "@/components/login";
 import { useEffect, useState } from "react";
 import { isSessionValid } from "@/functions/authenticationAPI";
+import SkinsPage from "@/components/skins";
 
 export default function Home() {
 	const [validSession, setValidSession] = useState(false);
@@ -34,7 +35,7 @@ export default function Home() {
 	return (
 		<>
 			{validSession ?
-				<p>Hello</p>
+				<SkinsPage />
 			:
 				<Login />}
 		</>
