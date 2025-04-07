@@ -1,6 +1,7 @@
 import { createAccessToken, getSessionToken } from "@/functions/authenticationAPI";
 import { listUserSkins } from "@/functions/skinAPI";
 import { useEffect, useState } from "react"
+import SkinViewerComponent from "./skinViewer"
 
 export default function SkinList() {
     const [index, setIndex] = useState(0);
@@ -63,16 +64,23 @@ export default function SkinList() {
         setSkins(listUserSkinsResponseList.data.skins);
     }
 
+    function updateIndex(newIndex: number) {
+        if(newIndex <= skinsCount && newIndex >= 0) {
+            setIndex(newIndex);
+        }
+    }
+
     return (
         <div>
             <h2 className="text-3xl text-blue-500 font-semibold">My Skins</h2>
-            <img src={skinImage} alt="Skin" />
+            {/* <img src={skinImage} alt="Skin" /> */}
+            <SkinViewerComponent skinURL={skinImage} />
             <div className="flex flex-row justify-between">
-                <button>1</button>
-                <button>{`<`}</button>
-                <input type="number" value={index} onChange={(e) => setIndex(e.target.valueAsNumber)} className="border px-2 py-1 rounded" />
-                <button>{`>`}</button>
-                <button>{skinsCount}</button>
+                <button onClick={() => {updateIndex(0)}}>1</button>
+                <button onClick={() => {updateIndex(index - 1)}}>{`<`}</button>
+                <input type="number" value={index + 1} onChange={(e) => updateIndex(e.target.valueAsNumber - 1)} className="border px-2 py-1 rounded" />
+                <button onClick={() => {updateIndex(index + 1)}}>{`>`}</button>
+                <button onClick={() => {updateIndex(skinsCount)}}>{skinsCount + 1}</button>
             </div>
 
         </div>
