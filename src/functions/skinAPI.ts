@@ -24,13 +24,10 @@ export async function uploadSkinRequest(user: string, skin: string, token: strin
   return {success: response.ok, data: data};
 }
   
-export async function listUserSkins(token: string, user: string, count: number | boolean) {
-  let countString = "false";
-  if(typeof count === "boolean") {
-    if(count) { countString = "true"}
-  }
+export async function listUserSkins(token: string, user: string, count: boolean) {
+  const countString = count ? "?count=true" : "";
 
-  const url = `https://api.weeaxe.cn:15102/skin/v3/data/${user}?count=${count}`;
+  const url = `https://api.weeaxe.cn:15102/skin/v3/data/${user}${countString}`;
     
   const response = await fetch(url, {
     method: 'GET',

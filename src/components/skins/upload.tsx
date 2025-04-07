@@ -4,7 +4,7 @@ import { createAccessToken, getSessionToken } from "@/functions/authenticationAP
 import { uploadSkinRequest } from "@/functions/skinAPI";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 
 export default function SkinsPage() {
     const [username, setUsername] = useState("");
@@ -83,6 +83,8 @@ export default function SkinsPage() {
 
     return (
         <div>
+            <h2 className="text-3xl text-blue-500 font-semibold">Upload</h2>
+
             <input
                 type="text"
                 placeholder="Username"
