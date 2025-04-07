@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { getSkinDetails } from "@/functions/skinAPI";
 import { createAccessToken, getSessionToken } from "@/functions/authenticationAPI";
+import SkinViewerComponent from "./skinViewer";
 
 export default function SkinSearch() {
 	const [skinID, setSkinID] = useState("");
@@ -50,11 +51,12 @@ export default function SkinSearch() {
 			</form>
 			{ skinImage && (
 				<div>
-					<img
+					{/* <img
 						src={skinImage}
 						alt="Preview"
 						className="w-32 h-32 rounded"
-					/>
+					/> */}
+					<SkinViewerComponent skinURL={skinImage} />
 				</div>
 			)}
 		</div>

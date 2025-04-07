@@ -40,5 +40,5 @@ export default function SkinViewerComponent({ skinURL }: { skinURL: string }) { 
     };
   }, [skinURL]);
 
-  return <div ref={canvasRef} />;
+  return <div className="m-auto" ref={canvasRef} />;
 }
